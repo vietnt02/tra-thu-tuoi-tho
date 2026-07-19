@@ -140,12 +140,14 @@ cat > "$SITE/index.html" <<HTML
   .dl{ margin-top:10px; }
   .dlrow{ display:block; text-decoration:none; color:#292018; background:#fffdf8;
           border:1px solid #e7dcc8; padding:10px 12px; margin:8px 0; overflow:hidden; }
-  .res{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-weight:bold;
-        font-size:.95rem; background:#f6ede0; border:1px solid #e7dcc8; padding:2px 7px;
-        margin-right:6px; white-space:nowrap; }
+  /* .res và .btn cùng line-height + padding dọc -> 2 box cao bằng nhau, thẳng hàng
+     (tầng cổ không có flex align-items để căn giữa) */
+  .res{ display:inline-block; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+        font-weight:bold; font-size:.95rem; line-height:20px; background:#f6ede0;
+        border:1px solid #e7dcc8; padding:6px 10px; margin-right:6px; white-space:nowrap; }
   .orient,.size{ display:none; }
   .btn{ display:inline-block; float:right; background:#d9541f; color:#fff; font-weight:bold;
-        font-size:.87rem; padding:6px 13px; margin-left:8px; }
+        font-size:.87rem; line-height:20px; padding:7px 13px; margin-left:8px; }
   footer{ text-align:center; color:#92826f; font-size:.8rem; margin-top:26px; }
 
   /* ===== NÂNG CẤP: trình duyệt hiện đại =====
