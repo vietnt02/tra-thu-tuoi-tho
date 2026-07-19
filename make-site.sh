@@ -139,12 +139,12 @@ cat > "$SITE/index.html" <<HTML
   .shot img{ height:120px; width:auto; border:1px solid #ded5c2; margin:0 6px 6px 0; vertical-align:top; }
   .dl{ margin-top:10px; }
   .dlrow{ display:block; text-decoration:none; color:#292018; background:#fffdf8;
-          border:1px solid #e7dcc8; padding:10px 12px; margin:8px 0; }
+          border:1px solid #e7dcc8; padding:10px 12px; margin:8px 0; overflow:hidden; }
   .res{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-weight:bold;
         font-size:.95rem; background:#f6ede0; border:1px solid #e7dcc8; padding:2px 7px;
         margin-right:6px; white-space:nowrap; }
   .orient,.size{ display:none; }
-  .btn{ display:inline-block; background:#d9541f; color:#fff; font-weight:bold;
+  .btn{ display:inline-block; float:right; background:#d9541f; color:#fff; font-weight:bold;
         font-size:.87rem; padding:6px 13px; margin-left:8px; }
   footer{ text-align:center; color:#92826f; font-size:.8rem; margin-top:26px; }
 
