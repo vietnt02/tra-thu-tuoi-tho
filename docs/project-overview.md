@@ -28,6 +28,11 @@ Tên project đặt trung tính (`j2me-display-porting`) vì:
 2. **Product #2, #3...**: lặp lại quy trình, mỗi lần bồi thêm `technique.md`. Nhận diện phần lặp đi lặp lại.
 3. **[Tương lai] Framework**: khi đã mod đủ vài game và thấy rõ phần chung, dựng scaffold bán tự động (xem `decisions.md` mục "Ranh giới tool hoá").
 
+## Trang tải game (site)
+
+- Hiện tại: 1 trang duy nhất, `make-site.sh` sinh từ `products/*/release/` (jar + icon từ manifest, `shots/`, `description.txt`, `vendor.txt`), deploy GitHub Pages qua Actions — https://vietnt02.github.io/tra-thu-tuoi-tho/. CSS 2 tầng: nền CSS 2.1 cho Opera Mini/Symbian (người dùng thật mở bằng E72i), tầng hiện đại trong `@supports (display:flex) and (color:var(--gate))`.
+- **[Tương lai] Khi nhiều game**: tách overview → detail (trang chủ chỉ liệt kê icon + tên, bấm vào mới ra ảnh/mô tả/nút tải) + ô search theo tên game. Để detail hết trên trang chủ như hiện nay thì nhiều game sẽ phải lướt rất lâu. Lưu ý search phải chạy được trên trình duyệt cổ (form GET thuần hoặc lọc phía server-build, không dựa JS hiện đại).
+
 ## Cấu trúc thư mục
 
 ```
