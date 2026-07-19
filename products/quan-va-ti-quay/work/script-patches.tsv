@@ -1,0 +1,109 @@
+# Vá toạ độ UI trong script chính (res 1 = entry "0" blob 1) cho landscape 320x240.
+# Cột: resId  insnOffset  operandIdx  giá_trị_mới   (offset theo script-tool.py dis)
+# Toạ độ gốc thiết kế 240x320; tâm màn (120,160) -> (160,120); mép dưới 320 -> 240.
+
+# --- nền đen boot (op43 fillrect 0,0,240,320 -> 320x240)
+1 2 3 320
+1 2 4 240
+
+# --- 4 hộp thoại boot (op42 list, tâm 120,160 -> 160,120): âm thanh + các hộp đầu game
+1 156 2 160
+1 156 3 120
+1 173 2 160
+1 173 3 120
+1 190 2 160
+1 190 3 120
+1 207 2 160
+1 207 3 120
+1 476 2 160
+1 476 3 120
+# giấy cuộn tre của hộp thoại (op44 sprite tâm 120,160 -> 160,120)
+1 462 1 160
+1 462 2 120
+
+# --- chữ kể chuyện (op45, x=15 wrap 210 -> dời x +40 để khối chữ vào giữa; y vcenter 160->120)
+1 626 1 55
+1 626 2 120
+1 5503 1 55
+1 5503 2 120
+1 5576 1 55
+1 5576 2 120
+
+# --- thoại trong game: giấy (op44 514 @120,220) + chữ (op45 @15,220) -> tâm ngang, nhích lên
+1 976 1 160
+1 976 2 180
+1 1252 1 160
+1 1252 2 180
+1 5904 1 160
+1 5904 2 180
+1 6154 1 160
+1 6154 2 180
+1 989 1 55
+1 989 2 180
+1 1047 1 55
+1 1047 2 180
+1 1098 1 55
+1 1098 2 180
+1 1265 1 55
+1 1265 2 180
+1 1323 1 55
+1 1323 2 180
+1 5917 1 55
+1 5917 2 180
+1 5975 1 55
+1 5975 2 180
+1 6167 1 55
+1 6167 2 180
+1 6225 1 55
+1 6225 2 180
+
+# --- menu chính (op42 list 770 @120,135): sang tâm ngang, hạ xuống dưới banner
+1 1584 2 160
+1 1584 3 170
+1 4748 2 160
+1 4748 3 170
+1 4997 2 160
+1 4997 3 170
+1 5370 2 160
+1 5370 3 170
+
+# --- popup truyện tranh "bị phát hiện" (sec 6): 2 panel + 2 dòng chữ, dời +40 ngang, tâm dọc 160->120
+1 1924 1 240
+1 1924 2 120
+1 1938 1 80
+1 1938 2 120
+1 1884 1 160
+1 1884 2 85
+1 1901 1 85
+1 1901 2 100
+
+# --- các text/sprite tâm màn (120,160) -> (160,120)
+1 2114 1 160
+1 2114 2 120
+1 6306 1 160
+1 6306 2 120
+1 5099 1 160
+1 5099 2 120
+
+# --- overlay gameplay sec 24: 2 mảnh HUD neo đáy y=320 -> 240
+# 516 = cụm bàn tay/tim (tâm 240-design 115 -> 155); 517 = avatar mép phải (240 -> 320)
+1 2895 1 155
+1 2895 2 240
+1 2908 1 320
+1 2908 2 240
+# màn "Vòng" trong khung tre (sec 13): GIỮ NGUYÊN x của cụm rương+nhân vật+con trỏ
+# (tranh rương do bộ vẽ bản đồ, nhân vật do hệ widget — 2 hệ toạ độ, dịch lệch nhau;
+# để nguyên = nhân vật đứng ĐÚNG trên rương như bản gốc, chấp nhận nằm hơi trái).
+# CHỈ đưa text "Vòng 01..." (gốc dưới khung, landscape hết chỗ) lên vùng tranh vườn.
+1 2451 1 160
+1 2451 2 155
+
+# hàng chấm/rương nhỏ (container widget 0) -> giữa
+1 2367 1 160
+
+# rà soát tổng: 2 text UI còn neo đáy màn dọc
+# sec1 story text (trên nền menu) y285; sec37 màn ảnh+text y240 -> tâm ngang + kéo lên
+1 1499 1 160
+1 1499 2 210
+1 5282 1 160
+1 5282 2 180

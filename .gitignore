@@ -1,0 +1,6 @@
+# build output — sinh lại bằng ./make-site.sh, GitHub Actions tự build khi deploy
+site/
+
+.DS_Store
+tools/emu-harness/.cls/
+__pycache__/
