@@ -111,93 +111,112 @@ cat > "$SITE/index.html" <<HTML
 <title>Trả Thù Tuổi Thơ — game Nokia mod đúng màn hình</title>
 <meta name="description" content="Tuyển tập game Nokia tuổi thơ — tải file .jar về cài là chơi.">
 <style>
-  :root{
-    --bg:#f5f0e6; --dot:#e9e1d0; --card:#fffdf8; --ink:#292018; --muted:#92826f;
-    --accent:#d9541f; --accent-ink:#fff; --line:#e7dcc8; --chip:#f6ede0; --bezel:#221d17; --phone:#221d17;
+  /* ===== NỀN TẢNG: CSS 2.1 an toàn cho trình duyệt Symbian/S60 cổ =====
+     Không var(), không flex, màu ghi thẳng — máy Nokia cổ hiển thị bản mộc
+     nhưng thẳng hàng, đọc được, tải được. Toàn bộ giao diện hiện đại nằm
+     trong khối @supports (display:flex) bên dưới; trình duyệt cổ không hiểu
+     @supports nên bỏ qua nguyên khối. */
+  *{ box-sizing:border-box; } html,body{ margin:0; }
+  body{ background:#f5f0e6; color:#292018;
+        font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+        padding:20px 12px 40px; }
+  .wrap{ max-width:680px; margin:0 auto; }
+  header{ text-align:center; margin:8px 0 24px; }
+  .logo{ display:none; }
+  h1{ font-size:1.9rem; margin:0 0 6px; }
+  h1 span{ color:#d9541f; }
+  .sub{ color:#92826f; font-size:.95rem; margin:0 auto; max-width:40ch; }
+  .game{ background:#fffdf8; border:1px solid #e7dcc8; padding:16px; margin:0 0 22px; }
+  .icon{ width:56px; height:56px; border:1px solid #e7dcc8; background:#f6ede0; vertical-align:middle; }
+  .game-head > div{ display:inline-block; vertical-align:middle; margin-left:8px; }
+  .icon-fallback{ display:inline-block; text-align:center; line-height:56px; font-size:26px; }
+  h2{ font-size:1.35rem; margin:0; }
+  .meta{ color:#92826f; font-size:.85rem; }
+  .desc{ color:#92826f; font-size:.93rem; margin:12px 0 0; }
+  .shots{ margin:14px 0 0; }
+  .shot{ display:inline; margin:0; }
+  .shot img{ height:120px; width:auto; border:1px solid #ded5c2; margin:0 6px 6px 0; vertical-align:top; }
+  .dl{ margin-top:10px; }
+  .dlrow{ display:block; text-decoration:none; color:#292018; background:#fffdf8;
+          border:1px solid #e7dcc8; padding:10px 12px; margin:8px 0; }
+  .res{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-weight:bold;
+        font-size:.95rem; background:#f6ede0; border:1px solid #e7dcc8; padding:2px 7px;
+        margin-right:6px; white-space:nowrap; }
+  .orient{ font-size:.92rem; }
+  .orient small{ color:#92826f; font-size:.8rem; }
+  .size{ color:#92826f; font-size:.83rem; margin-left:6px;
+         font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  .btn{ display:inline-block; background:#d9541f; color:#fff; font-weight:bold;
+        font-size:.87rem; padding:6px 13px; margin-left:8px; }
+  footer{ text-align:center; color:#92826f; font-size:.8rem; margin-top:26px; }
+
+  /* ===== NÂNG CẤP: trình duyệt hiện đại ===== */
+  @supports (display:flex){
+    :root{
+      --bg:#f5f0e6; --dot:#e9e1d0; --card:#fffdf8; --ink:#292018; --muted:#92826f;
+      --accent:#d9541f; --accent-ink:#fff; --line:#e7dcc8; --chip:#f6ede0; --bezel:#221d17;
+    }
+    body{ background:var(--bg);
+          background-image:radial-gradient(var(--dot) 1px, transparent 1.5px);
+          background-size:22px 22px;
+          color:var(--ink); padding:28px 16px 48px; }
+    header{ margin:8px 0 30px; }
+    .logo{ display:inline-block; margin-bottom:10px; }
+    h1{ letter-spacing:-.02em; }
+    h1 span{ color:var(--accent); }
+    .sub{ color:var(--muted); }
+    .game{ background:var(--card); border-color:var(--line); border-radius:18px;
+           padding:22px 22px 18px; margin:0 0 26px;
+           box-shadow:0 1px 2px rgba(0,0,0,.04), 0 10px 30px -18px rgba(0,0,0,.18); }
+    .game-head{ display:flex; align-items:center; gap:14px; }
+    .game-head > div{ margin-left:0; }
+    .icon{ border-radius:14px; flex:0 0 auto; image-rendering:pixelated;
+           border-color:var(--line); background:var(--chip); }
+    .icon-fallback{ display:flex; align-items:center; justify-content:center; line-height:normal; }
+    h2{ letter-spacing:-.01em; }
+    .meta{ color:var(--muted); margin-top:2px; }
+    .desc{ color:var(--muted); margin:14px 0 0; }
+    .shots{ display:flex; gap:12px; overflow-x:auto; margin:16px -6px 0; padding:2px 6px 10px;
+            scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; }
+    .shot{ display:block; flex:0 0 auto; scroll-snap-align:start;
+           background:var(--bezel); padding:8px; border-radius:12px; }
+    .shot img{ display:block; height:190px; border:0; margin:0; border-radius:5px; }
+    .dl{ display:flex; flex-direction:column; gap:8px; margin-top:14px; }
+    .dlrow{ display:flex; align-items:center; gap:14px; color:inherit; background:none;
+            border-color:var(--line); border-radius:12px; padding:10px 14px; margin:0;
+            transition:border-color .12s ease, background .12s ease; }
+    .dlrow:hover{ border-color:var(--accent); background:var(--chip); }
+    .res{ background:var(--chip); border-color:var(--line); border-radius:8px;
+          padding:4px 9px; margin:0; font-weight:700; }
+    .orient{ flex:1; min-width:0; }
+    .orient small{ display:block; color:var(--muted); }
+    .size{ color:var(--muted); white-space:nowrap; margin:0; }
+    .btn{ background:var(--accent); color:var(--accent-ink); font-weight:650;
+          padding:8px 15px; border-radius:9px; white-space:nowrap; margin:0; }
+    footer{ color:var(--muted); margin-top:30px; }
+    @media (max-width:520px){ .shot img{ height:150px; } }
+    @media (max-width:440px){ .size{ display:none; } }
   }
   @media (prefers-color-scheme:dark){
     :root{
       --bg:#16130f; --dot:#1e1a14; --card:#211c16; --ink:#f2e9db; --muted:#a2937f;
-      --accent:#ff7a45; --accent-ink:#251208; --line:#383026; --chip:#2b251d; --bezel:#0d0b08; --phone:#463c2f;
+      --accent:#ff7a45; --accent-ink:#251208; --line:#383026; --chip:#2b251d; --bezel:#0d0b08;
     }
+    .phone-body{ fill:#463c2f; }
+    .phone-screen{ fill:#ff7a45; }
+    .phone-glare{ fill:#211c16; }
   }
-  *{ box-sizing:border-box; } html,body{ margin:0; }
-  body{
-    background:var(--bg);
-    background-image:radial-gradient(var(--dot) 1px, transparent 1.5px);
-    background-size:22px 22px;
-    color:var(--ink);
-    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    padding:28px 16px 48px;
-  }
-  .wrap{ max-width:680px; margin:0 auto; }
-
-  header{ text-align:center; margin:8px 0 30px; }
-  .logo{ display:inline-block; margin-bottom:10px; }
-  h1{ font-size:1.9rem; letter-spacing:-.02em; margin:0 0 6px; }
-  h1 span{ color:var(--accent); }
-  .sub{ color:var(--muted); font-size:.95rem; max-width:40ch; margin:0 auto; }
-
-  .game{
-    background:var(--card); border:1px solid var(--line); border-radius:18px;
-    padding:22px 22px 18px; margin:0 0 26px;
-    box-shadow:0 1px 2px rgba(0,0,0,.04), 0 10px 30px -18px rgba(0,0,0,.18);
-  }
-  .game-head{ display:flex; align-items:center; gap:14px; }
-  .icon{
-    width:56px; height:56px; border-radius:14px; flex:0 0 auto;
-    image-rendering:pixelated; border:1px solid var(--line); background:var(--chip);
-  }
-  .icon-fallback{ display:flex; align-items:center; justify-content:center; font-size:26px; }
-  h2{ font-size:1.35rem; margin:0; letter-spacing:-.01em; }
-  .meta{ color:var(--muted); font-size:.85rem; margin-top:2px; }
-  .desc{ color:var(--muted); font-size:.93rem; margin:14px 0 0; }
-
-  .shots{
-    display:flex; gap:12px; overflow-x:auto; margin:16px -6px 0; padding:2px 6px 10px;
-    scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch;
-  }
-  .shot{
-    flex:0 0 auto; margin:0; scroll-snap-align:start;
-    background:var(--bezel); padding:8px; border-radius:12px;
-  }
-  .shot img{ display:block; height:190px; width:auto; border-radius:5px; }
-  @media (max-width:520px){ .shot img{ height:150px; } }
-
-  .dl{ display:flex; flex-direction:column; gap:8px; margin-top:14px; }
-  .dlrow{
-    display:flex; align-items:center; gap:14px; text-decoration:none; color:inherit;
-    border:1px solid var(--line); border-radius:12px; padding:10px 14px;
-    transition:border-color .12s ease, background .12s ease;
-  }
-  .dlrow:hover{ border-color:var(--accent); background:var(--chip); }
-  .res{
-    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-    font-weight:700; font-size:.95rem; background:var(--chip);
-    border:1px solid var(--line); border-radius:8px; padding:4px 9px; white-space:nowrap;
-  }
-  .orient{ flex:1; min-width:0; font-size:.92rem; }
-  .orient small{ display:block; color:var(--muted); font-size:.8rem; }
-  .size{ color:var(--muted); font-size:.83rem; white-space:nowrap;
-         font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
-  .btn{
-    background:var(--accent); color:var(--accent-ink); font-weight:650; font-size:.87rem;
-    padding:8px 15px; border-radius:9px; white-space:nowrap;
-  }
-  @media (max-width:440px){ .size{ display:none; } }
-
-  footer{ text-align:center; color:var(--muted); font-size:.8rem; margin-top:30px; }
 </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <svg class="logo" width="44" height="64" viewBox="0 0 22 32" aria-hidden="true">
-        <rect x="1" y="1" width="20" height="30" rx="4" fill="var(--phone)"/>
-        <rect x="4" y="5" width="14" height="11" rx="1.5" fill="var(--accent)"/>
-        <rect x="6" y="7" width="6" height="2" rx="1" fill="var(--card)" opacity=".85"/>
-        <circle cx="7" cy="21" r="1.6" fill="var(--muted)"/><circle cx="11" cy="21" r="1.6" fill="var(--muted)"/><circle cx="15" cy="21" r="1.6" fill="var(--muted)"/>
-        <circle cx="7" cy="25.5" r="1.6" fill="var(--muted)"/><circle cx="11" cy="25.5" r="1.6" fill="var(--muted)"/><circle cx="15" cy="25.5" r="1.6" fill="var(--muted)"/>
+        <rect class="phone-body" x="1" y="1" width="20" height="30" rx="4" fill="#221d17"/>
+        <rect class="phone-screen" x="4" y="5" width="14" height="11" rx="1.5" fill="#d9541f"/>
+        <rect class="phone-glare" x="6" y="7" width="6" height="2" rx="1" fill="#fffdf8" opacity=".85"/>
+        <circle cx="7" cy="21" r="1.6" fill="#92826f"/><circle cx="11" cy="21" r="1.6" fill="#92826f"/><circle cx="15" cy="21" r="1.6" fill="#92826f"/>
+        <circle cx="7" cy="25.5" r="1.6" fill="#92826f"/><circle cx="11" cy="25.5" r="1.6" fill="#92826f"/><circle cx="15" cy="25.5" r="1.6" fill="#92826f"/>
       </svg>
       <h1>Trả Thù <span>Tuổi Thơ</span></h1>
       <p class="sub">Tuyển tập game Nokia tuổi thơ — tải về cài là chơi.</p>
