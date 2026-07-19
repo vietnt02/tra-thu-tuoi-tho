@@ -13,6 +13,7 @@ SITE="$ROOT/site"
 rm -rf "$SITE"; mkdir -p "$SITE"
 
 manifest_field(){ unzip -p "$1" META-INF/MANIFEST.MF 2>/dev/null | tr -d '\r' | awk -F': ' -v k="$2" '$1==k{print $2; exit}'; }
+file_kb(){ echo $(( ($(wc -c < "$1" | tr -d ' ') + 512) / 1024 )); }
 
 sections=""
 for prod in "$ROOT"/products/*/; do
@@ -64,11 +65,24 @@ for prod in "$ROOT"/products/*/; do
   for jar in "${jars[@]}"; do
     base="$(basename "$jar")"
     cp "$jar" "$gdir/$base"
+    kb="$(file_kb "$jar")"
     res="$(echo "$base" | grep -oE '[0-9]+x[0-9]+' | head -1 || true)"
-    if [ -n "$res" ]; then res="${res%x*}×${res#*x}"; else res="—"; fi
+    orient=""; hint=""
+    if [ -n "$res" ]; then
+      w="${res%x*}"; h="${res#*x}"
+      if [ "$w" -gt "$h" ]; then orient="Màn ngang"; else orient="Màn dọc"; fi
+      case "$res" in
+        320x240) hint="Nokia E72, E63, E71…" ;;
+        240x320) hint="Nokia màn dọc phổ thông" ;;
+      esac
+      res="${w}×${h}"
+    else res="—"; fi
+    # .orient/.size ẩn ở tầng CSS cổ (Symbian màn hẹp), chỉ hiện ở tầng @supports
     rows="$rows
       <a class=\"dlrow\" href=\"./games/$slug/$base\" download>
         <span class=\"res\">$res</span>
+        <span class=\"orient\">$orient${hint:+ <small>$hint</small>}</span>
+        <span class=\"size\">$kb KB</span>
         <span class=\"btn\">Tải .jar</span>
       </a>"
   done
@@ -129,6 +143,7 @@ cat > "$SITE/index.html" <<HTML
   .res{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-weight:bold;
         font-size:.95rem; background:#f6ede0; border:1px solid #e7dcc8; padding:2px 7px;
         margin-right:6px; white-space:nowrap; }
+  .orient,.size{ display:none; }
   .btn{ display:inline-block; background:#d9541f; color:#fff; font-weight:bold;
         font-size:.87rem; padding:6px 13px; margin-left:8px; }
   footer{ text-align:center; color:#92826f; font-size:.8rem; margin-top:26px; }
@@ -171,10 +186,15 @@ cat > "$SITE/index.html" <<HTML
     .dlrow:hover{ border-color:var(--accent); background:var(--chip); }
     .res{ background:var(--chip); border-color:var(--line); border-radius:8px;
           padding:4px 9px; margin:0; font-weight:700; }
+    .orient{ display:inline; flex:1; min-width:0; font-size:.92rem; }
+    .orient small{ display:block; color:var(--muted); font-size:.8rem; }
+    .size{ display:inline; color:var(--muted); font-size:.83rem; white-space:nowrap;
+           font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
     .btn{ background:var(--accent); color:var(--accent-ink); font-weight:650;
-          padding:8px 15px; border-radius:9px; white-space:nowrap; margin-left:auto; }
+          padding:8px 15px; border-radius:9px; white-space:nowrap; margin-left:0; }
     footer{ color:var(--muted); margin-top:30px; }
     @media (max-width:520px){ .shot img{ height:150px; } }
+    @media (max-width:440px){ .size{ display:none; } }
   }
   @media (prefers-color-scheme:dark){
     :root{
