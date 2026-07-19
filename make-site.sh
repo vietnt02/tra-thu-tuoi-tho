@@ -148,8 +148,11 @@ cat > "$SITE/index.html" <<HTML
         font-size:.87rem; padding:6px 13px; margin-left:8px; }
   footer{ text-align:center; color:#92826f; font-size:.8rem; margin-top:26px; }
 
-  /* ===== NÂNG CẤP: trình duyệt hiện đại ===== */
-  @supports (display:flex){
+  /* ===== NÂNG CẤP: trình duyệt hiện đại =====
+     Gate phải kiểm tra CẢ var(): Opera Mini (Presto) hiểu @supports + flex
+     nhưng không hiểu biến CSS -> nếu chỉ gate bằng flex nó sẽ áp tầng này
+     và vỡ layout (đã dính trên E72i thật). */
+  @supports (display:flex) and (color:var(--gate)){
     :root{
       --bg:#f5f0e6; --dot:#e9e1d0; --card:#fffdf8; --ink:#292018; --muted:#92826f;
       --accent:#d9541f; --accent-ink:#fff; --line:#e7dcc8; --chip:#f6ede0; --bezel:#221d17;
