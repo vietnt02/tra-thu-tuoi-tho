@@ -109,7 +109,7 @@ cat > "$SITE/index.html" <<HTML
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Trả Thù Tuổi Thơ — game Nokia mod đúng màn hình</title>
-<meta name="description" content="Game J2ME tuổi thơ mod lại cho đúng kích thước màn hình Nokia cổ. Tải file .jar, chép vào thẻ nhớ là chơi.">
+<meta name="description" content="Tuyển tập game Nokia tuổi thơ — tải file .jar về cài là chơi.">
 <style>
   :root{
     --bg:#f5f0e6; --dot:#e9e1d0; --card:#fffdf8; --ink:#292018; --muted:#92826f;
@@ -200,7 +200,7 @@ cat > "$SITE/index.html" <<HTML
         <circle cx="7" cy="25.5" r="1.6" fill="var(--muted)"/><circle cx="11" cy="25.5" r="1.6" fill="var(--muted)"/><circle cx="15" cy="25.5" r="1.6" fill="var(--muted)"/>
       </svg>
       <h1>Trả Thù <span>Tuổi Thơ</span></h1>
-      <p class="sub">Game Nokia tuổi thơ mod lại cho đúng kích thước màn hình — không méo hình, không xoay máy. Chọn bản khớp độ phân giải máy bạn.</p>
+      <p class="sub">Tuyển tập game Nokia tuổi thơ — tải về cài là chơi.</p>
     </header>
     ${sections}
     <footer>Cập nhật: $(date +%d/%m/%Y)</footer>
